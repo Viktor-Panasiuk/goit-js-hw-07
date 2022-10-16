@@ -19,8 +19,8 @@ function onClickGallary(event) {
     const lightBox = basicLightbox.create(`
         <img src="${targetEl.dataset.source}">`,
         {
-            onShow: (instance) => {document.addEventListener('keydown', addListenerToLightBox(instance))},
-            onClose: (instance) => { document.removeEventListener('keydown', addListenerToLightBox(instance))},
+            onShow: (instance) => {document.addEventListener('keydown', addListenerPressEsc(instance))},
+            onClose: (instance) => { document.removeEventListener('keydown', addListenerPressEsc(instance))},
         });
     
     lightBox.show();
@@ -47,7 +47,7 @@ function markupItem({ preview, original, description }) {
     return markup;
 }
 
-function addListenerToLightBox(instance) {
+function addListenerPressEsc(instance) {
     function onLightBoxPressEsc(event) {
     if (event.code === 'Escape') {
         instance.close();
