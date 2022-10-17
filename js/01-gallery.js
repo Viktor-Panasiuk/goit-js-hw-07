@@ -1,6 +1,7 @@
 import { galleryItems } from './gallery-items.js';
 
 // Change code below this line
+let addListenerRef;
 const gallerryRef = document.querySelector('.gallery');
 
 gallerryRef.innerHTML = setMarkupGallery(galleryItems);
@@ -18,10 +19,12 @@ function onClickGallary(event) {
     const lightBox = basicLightbox.create(`
         <img src="${targetEl.dataset.source}">`,
         {
-            onShow: (instance) => {document.addEventListener('keydown', addListenerPressEsc(instance))},
-            onClose: (instance) => { document.removeEventListener('keydown', addListenerPressEsc(instance))},
+            onShow: (instance) => {
+                addListenerRef = addListenerPressEsc(instance);
+                document.addEventListener('keydown', addListenerRef);
+            },
+            onClose: () => { document.removeEventListener('keydown', addListenerRef)},
         });
-    
     lightBox.show();
 }
 
